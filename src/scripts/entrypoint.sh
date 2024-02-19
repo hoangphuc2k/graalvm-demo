@@ -5,11 +5,11 @@ mkdir -p $CRAC_FILES_DIR
 
 if [ -z "$(ls -A $CRAC_FILES_DIR)" ]; then
   if [ "$FLAG" = "-r" ]; then
-    echo 128 > /proc/sys/kernel/ns_last_pid; java -Dspring.context.checkpoint=onRefresh -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.health.probes.enabled="true" -XX:CRaCCheckpointTo=$CRAC_FILES_DIR -jar /opt/app/graalvm-0.0.1-SNAPSHOT.jar
+    echo 128 > /proc/sys/kernel/ns_last_pid; java -Dspring.context.checkpoint=onRefresh -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.health.probes.enabled="true" -XX:CRaCCheckpointTo=$CRAC_FILES_DIR -jar /app/target/graalvm-0.0.1-SNAPSHOT.jar
   else
-    echo 128 > /proc/sys/kernel/ns_last_pid; java -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.health.probes.enabled="true" -XX:CRaCCheckpointTo=$CRAC_FILES_DIR -jar /opt/app/graalvm-0.0.1-SNAPSHOT.jar&
-    sleep 5
-    jcmd /opt/app/graalvm-0.0.1-SNAPSHOT.jar JDK.checkpoint
+    echo 128 > /proc/sys/kernel/ns_last_pid; java -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.health.probes.enabled="true" -XX:CRaCCheckpointTo=$CRAC_FILES_DIR -jar /app/target/graalvm-0.0.1-SNAPSHOT.jar&
+    sleep 12
+    jcmd /app/target/graalvm-0.0.1-SNAPSHOT.jar JDK.checkpoint
   fi
   sleep infinity
 else
